@@ -31,27 +31,9 @@ public class PitchBall : MonoBehaviour
             timeElapsed = 0;
         }
 
-        //SamplePitch();
         Pitch();
     }
 
-    private void SamplePitch()
-    {
-        if (timeElapsed < pitchDuration)
-        {
-            timeElapsed += Time.deltaTime;
-            float t = timeElapsed / pitchDuration;
-
-            //±Ëµµ °è»ê
-            float x = pitchCurveX.Evaluate(t);
-            float y = pitchCurveY.Evaluate(t);
-
-            Vector3 current = Vector3.Lerp(startPoint.position, endPoint.position, t);
-            current += new Vector3(x, y, 0f);
-
-            transform.position = current;
-        }
-    }
 
     private void Pitch()
     {
