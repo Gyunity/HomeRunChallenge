@@ -29,8 +29,10 @@ public class PitchBall : MonoBehaviour
         {
             transform.position = startPoint.position;
             timeElapsed = 0;
-        }
 
+            //베팅 시작
+            BattingManager.Instance.canJudge = true;
+        }
         Pitch();
     }
 
@@ -54,6 +56,7 @@ public class PitchBall : MonoBehaviour
         }
     }
 
+    //변화구에 따른 공 변화
     private void AnimationCurveSet(BallType ballType)
     {
         pitchCurveX = new AnimationCurve(
@@ -81,6 +84,5 @@ public class PitchBall : MonoBehaviour
 
                 break;
         }
-
     }
 }
