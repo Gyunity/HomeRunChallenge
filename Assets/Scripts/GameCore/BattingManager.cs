@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattingManager : MonoBehaviour
@@ -43,12 +44,15 @@ public class BattingManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             battingTime = Time.time;
-            canJudge = false;
+            TryJudge();
         }
     }
 
     public void TryJudge()
     {
+        if (!canJudge)
+            return;
+
         float delta = Mathf.Abs(perfectTime - battingTime);
         canJudge = false;
 

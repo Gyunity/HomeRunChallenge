@@ -8,9 +8,8 @@ public class BattingZone : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            BattingManager.Instance.perfectTime = Time.time;
             Debug.Log("스트라이크!!");
-            StartCoroutine(Judge());
+            //StartCoroutine(Judge());
         }
     }
 

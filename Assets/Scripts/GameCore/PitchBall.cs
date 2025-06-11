@@ -32,6 +32,8 @@ public class PitchBall : MonoBehaviour
 
             //베팅 시작
             BattingManager.Instance.canJudge = true;
+            BattingManager.Instance.perfectTime = Time.time + pitchDuration;
+
         }
         Pitch();
     }
