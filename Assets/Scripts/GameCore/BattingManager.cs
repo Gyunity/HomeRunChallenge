@@ -25,7 +25,7 @@ public class BattingManager : MonoBehaviour
 
     HitResult result = HitResult.Perfect;
 
-    public float battingTime = 0;
+    public float touchTime = 0;
     public bool canJudge = false;
     public float perfectTime = 0;
 
@@ -38,37 +38,43 @@ public class BattingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            battingTime = Time.time;
+            touchTime = Time.time;
             TryJudge();
         }
     }
+
+    public float BattingTime()
+    {
+        return perfectTime - touchTime;
+    }
+
 
     public void TryJudge()
     {
         if (!canJudge)
             return;
 
-        float delta = perfectTime - battingTime;
+        float delta = BattingTime();
         canJudge = false;
 
         if (delta > -0.1f && delta < 0.1f)
         {
             result = HitResult.Perfect;
-            HirResultLog();
+            HitResultLog();
         }
         else if (delta > -0.2f && delta < 0.2f)
         {
             result = HitResult.Good;
-            HirResultLog();
+            HitResultLog();
         }
         else
         {
             result = HitResult.Miss;
-            HirResultLog();
+            HitResultLog();
         }
     }
 
-    private void HirResultLog()
+    private void HitResultLog()
     {
         if(result == HitResult.Perfect)
             Debug.Log("Perfect!");
