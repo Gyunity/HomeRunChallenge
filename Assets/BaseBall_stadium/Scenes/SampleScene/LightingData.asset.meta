@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 560676b05059a624b896a85796883a0f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 203661
+  packageName: Base ball Stadium
+  packageVersion: 1.0
+  assetPath: Assets/BaseBall_stadium/Scenes/SampleScene/LightingData.asset
+  uploadId: 464362
