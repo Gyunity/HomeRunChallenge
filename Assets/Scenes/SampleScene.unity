@@ -119,43 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &83927756 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2762958870458571330, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
-  m_PrefabInstance: {fileID: 733614994}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &83927758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 83927756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowDebugText: 0
-  ShowCameraFrustum: 1
-  IgnoreTimeScale: 0
-  WorldUpOverride: {fileID: 0}
-  ChannelMask: -1
-  UpdateMethod: 2
-  BlendUpdateMethod: 1
-  LensModeOverride:
-    Enabled: 0
-    DefaultMode: 2
-  DefaultBlend:
-    Style: 1
-    Time: 2
-    CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  CustomBlends: {fileID: 0}
 --- !u!1001 &393742652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,6 +363,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7d8ab486686a4d84e95fb7989ae7cf9e, type: 3}
   m_PrefabInstance: {fileID: 460470657}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &600609892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 600609894}
+  - component: {fileID: 600609893}
+  m_Layer: 0
+  m_Name: PitchingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &600609893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600609892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310facc7483a8694a86793c616ac1640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 1759826398091092750, guid: be0fadb0de4257b4a941414705c05451, type: 3}
+  spawnPoint: {fileID: 1591723698}
+  targetPoint: {fileID: 1568151026}
+  pitchDuration: 1
+--- !u!4 &600609894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600609892}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.4436134, y: 2.2264192, z: -0.38346037}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &644670098
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,6 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644670100}
   - component: {fileID: 644670099}
+  - component: {fileID: 644670101}
   m_Layer: 0
   m_Name: BattingManager
   m_TagString: Untagged
@@ -424,7 +436,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644670098}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52f33fbbaa67d424f99b50cef4a3faa1, type: 3}
   m_Name: 
@@ -447,6 +459,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &644670101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644670098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419bf89b4d24c7c40ae1e5f58ec8308e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  batZoneTransform: {fileID: 1578793567}
 --- !u!1 &700433667
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,15 +715,13 @@ PrefabInstance:
       value: BB_Staidum_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2762958870458571330, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6162696744597826709, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2136564347}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2762958870458571330, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 83927758}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
 --- !u!4 &733614995 stripped
 Transform:
@@ -1067,7 +1090,7 @@ GameObject:
   - component: {fileID: 1414415206}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1242,7 +1265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1437461940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,9 +1845,10 @@ SceneRoots:
   - {fileID: 1591723698}
   - {fileID: 1568151026}
   - {fileID: 1578793567}
-  - {fileID: 644670100}
   - {fileID: 703930813}
   - {fileID: 1263919736}
   - {fileID: 700433668}
   - {fileID: 1414415210}
   - {fileID: 1351433862}
+  - {fileID: 600609894}
+  - {fileID: 644670100}
