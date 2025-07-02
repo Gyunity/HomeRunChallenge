@@ -34,11 +34,14 @@ public class PitchingManager : MonoBehaviour
 
     public void PitchBall()
     {
-        if(ballPrefab == null || spawnPoint == null || targetPoint == null)
+        if (ballPrefab == null || spawnPoint == null || targetPoint == null)
         {
             Debug.LogWarning("PitchingManager: ballPrefab, spawnPoint, or targetPoint not assigned.");
             return;
         }
+
+        if (CurrentBall != null)
+            Destroy(CurrentBall);
 
         // °ø »ý¼º
         CurrentBall = Instantiate(ballPrefab, spawnPoint.position, Quaternion.identity);
@@ -54,7 +57,7 @@ public class PitchingManager : MonoBehaviour
             Vector3 dir = (targetPoint.position - spawnPoint.position).normalized;
             float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
 
-            float speed = distance / perfectHitTime;
+            float speed = distance / pitchDuration;
             rb.linearVelocity = dir * speed;
         }
         else

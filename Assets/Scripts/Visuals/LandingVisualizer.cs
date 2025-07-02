@@ -25,7 +25,7 @@ public class LandingVisualizer : MonoBehaviour
         Vector3 pos = origin + forward.normalized * dist;
         pos.y += heightoffset;
 
-        if (marker != null)
+        if (marker == null)
             marker = Instantiate(landingMarkerPrefab, pos, Quaternion.identity);
         else
         {

@@ -22,43 +22,20 @@ public class HitInputHandler : MonoBehaviour
 
             // 2) Timing & Position 판정
             var tJudge = new TimingJudge(PitchingManager.Instance.perfectHitTime);
-            var tRes = tJudge.Evaluate(clickTime);
+            TimingResult tRes = tJudge.Evaluate(clickTime);
+            Debug.Log("판정 결과" + tRes.Accuracy +"  " + tRes.Offset);
 
             float pAcc = new PositionJudge(batZoneTransform.position).Evaluate(clickWorld);
+            Debug.Log($"클릭 위치 x : {clickWorld.x} y : {clickWorld.y} z : {clickWorld.z}");
 
             // 3) 속도, 수직/수평 각도 계산
             var (speed, vertAngle, horzAngle) = new HitPhysicsCalculator().Calculate(tRes, pAcc, tJudge.MaxWindow);
 
             // 4) 공 발사
             GameObject ball = PitchingManager.Instance.CurrentBall;
-            // 1) 필수 참조 체크
-            if (ball == null)
-            {
-                Debug.LogError("HitInputHandler: ball null입니다!");
-                return;
-            }
-            if (speed == null)
-            {
-                Debug.LogError("HitInputHandler: speed null입니다!");
-                return;
-            }
-            if (vertAngle == null)
-            {
-                Debug.LogError("HitInputHandler: vertAngle null입니다!");
-                return;
-            }
-            if (horzAngle == null)
-            {
-                Debug.LogError("HitInputHandler: 아직 horzAngle 생성되지 않았습니다!");
-                return;
-            }
-            if (batZoneTransform == null)
-            {
-                Debug.LogError("HitInputHandler: 아직 batZoneTransform 생성되지 않았습니다!");
-                return;
-            }
             BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, batZoneTransform.forward);
-            // 5) 낙하지점 예측 & 표시
+
+            //// 5) 낙하지점 예측 & 표시
             float distance = new TrajectoryPredictor().PredictDistance(speed, vertAngle);
             LandingVisualizer.Instance.ShowLandingSpot(distance, batZoneTransform.position, batZoneTransform.forward);
         }
