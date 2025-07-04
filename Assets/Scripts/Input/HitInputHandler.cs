@@ -8,14 +8,26 @@ public class HitInputHandler : MonoBehaviour
     [Tooltip("타격존 중심 Transform")]
     public Transform batZoneTransform;
 
+    [SerializeField] private LayerMask hitLayerMask;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             // 1) 입력 정보 수집
             Vector3 screenPos = (Input.touchCount > 0)? (Vector3)Input.GetTouch(0).position : Input.mousePosition;
+
+            Ray ray = Camera.main.ScreenPointToRay(screenPos);
+
+            if(!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, hitLayerMask))
+            {
+                Debug.LogWarning("HitInputHandler : 베팅존이 아닙니다.");
+                return;
+            }
+
             //batzoneTransform과 같은 z깊이 값으로 변환
-            Vector3 clickWorld = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, batZoneTransform.position.z));
+            //Vector3 clickWorld = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, batZoneTransform.position.z));
+            Vector3 clickWorld = hit.point;
 
             //입력시점
             float clickTime = Time.time;
@@ -25,7 +37,7 @@ public class HitInputHandler : MonoBehaviour
             TimingResult tRes = tJudge.Evaluate(clickTime);
             Debug.Log("판정 결과" + tRes.Accuracy +"  " + tRes.Offset);
 
-            float pAcc = new PositionJudge(batZoneTransform.position).Evaluate(clickWorld);
+            float pAcc = new PositionJudge(PitchingManager.Instance.targetPoint.position).Evaluate(clickWorld);
             Debug.Log($"클릭 위치 x : {clickWorld.x} y : {clickWorld.y} z : {clickWorld.z}");
 
             // 3) 속도, 수직/수평 각도 계산
@@ -33,11 +45,11 @@ public class HitInputHandler : MonoBehaviour
 
             // 4) 공 발사
             GameObject ball = PitchingManager.Instance.CurrentBall;
-            BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, batZoneTransform.forward);
-
+            ball.GetComponent<Rigidbody>().useGravity = true;
+            BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, PitchingManager.Instance.spawnPoint.position - PitchingManager.Instance.targetPoint.position);
             //// 5) 낙하지점 예측 & 표시
-            float distance = new TrajectoryPredictor().PredictDistance(speed, vertAngle);
-            LandingVisualizer.Instance.ShowLandingSpot(distance, batZoneTransform.position, batZoneTransform.forward);
+            //float distance = new TrajectoryPredictor().PredictDistance(speed, vertAngle);
+            //LandingVisualizer.Instance.ShowLandingSpot(distance, batZoneTransform.position, batZoneTransform.forward);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))

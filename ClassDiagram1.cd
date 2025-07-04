@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BallController" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Control\BallController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattingManager" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAYAJAAAIAIAAAQAAQAAQAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GameCore\BattingManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattingZone" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACAAAA=</HashCode>
+      <FileName>Assets\Scripts\GameCore\BattingZone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PitchBall" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAmAAQACAAAAAAAEAgAAAAAAAAEAAAAABAAACAAAA=</HashCode>
+      <FileName>Assets\Scripts\GameCore\PitchBall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PitchingManager" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAACAAAAAAQAAAA0AAAAAAAAQAAAAEAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GameCore\PitchingManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HitInputHandler" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Input\HitInputHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector3Extensions" Collapsed="true">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\Scripts\Input\HitInputHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PositionJudge" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAgAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Judge\PositionJudge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimingJudge" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAQAAAAAAgAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Judge\TimingJudge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AccuracyResult" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Model\AccuracyResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HitPhysicsCalculator" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAIAAAAAIEACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PhysicsCalc\HitPhysicsCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrajectoryPredictor" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Trajectory\TrajectoryPredictor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LandingVisualizer" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABBADAAAAAAAAAAAAAAQAAAAAAABEA=</HashCode>
+      <FileName>Assets\Scripts\Visuals\LandingVisualizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Readme" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Readme.Section" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\TutorialInfo\Scripts\Readme.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAQAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\TutorialInfo\Scripts\Readme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TimingResult" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Judge\TimingJudge.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

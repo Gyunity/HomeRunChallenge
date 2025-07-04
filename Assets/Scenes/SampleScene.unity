@@ -452,13 +452,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644670098}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.66705275, z: 0, w: 0.74501055}
   m_LocalPosition: {x: -1.8968762, y: 2.0132253, z: 30.935734}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 83.68, z: 0}
 --- !u!114 &644670101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +472,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   batZoneTransform: {fileID: 1578793567}
+  hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &700433667
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,7 +627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6000524754756678269, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.01
+      value: 14.16
       objectReference: {fileID: 0}
     - target: {fileID: 6162696744597826709, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
       propertyPath: m_LocalScale.x
@@ -1423,7 +1426,7 @@ Transform:
   m_GameObject: {fileID: 1568151025}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.94, y: 2.16, z: 29.68}
+  m_LocalPosition: {x: 0.03, y: 2.59, z: 29.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1442,7 +1445,7 @@ GameObject:
   - component: {fileID: 1578793565}
   - component: {fileID: 1578793564}
   - component: {fileID: 1578793568}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BattingZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1534,7 +1537,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 2.51, z: 29.73}
-  m_LocalScale: {x: 0.31, y: 0.3, z: 0.36}
+  m_LocalScale: {x: 0.31, y: 0.01, z: 0.36}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1659,6 +1662,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a1811dcca97f8e41af5bc74d392a8e1, type: 3}
+--- !u!1 &1862428049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1862428051}
+  - component: {fileID: 1862428050}
+  m_Layer: 0
+  m_Name: LandingVisualizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1862428050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862428049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683478a47fae27441929b5b20a6ec3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  landingMarkerPrefab: {fileID: 2497234134999106736, guid: 973fd153a0b826745a096d0052795f96, type: 3}
+  heightoffset: 0.1
+--- !u!4 &1862428051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862428049}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.51, z: 29.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2009542550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1771,50 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 929580917}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2104917396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104917398}
+  - component: {fileID: 2104917397}
+  m_Layer: 0
+  m_Name: BallController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2104917397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104917396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed3d0cdb7b16d74f8a8a5662bf27465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2104917398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104917396}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.51, z: 29.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2136564346
@@ -1852,3 +1945,5 @@ SceneRoots:
   - {fileID: 1351433862}
   - {fileID: 600609894}
   - {fileID: 644670100}
+  - {fileID: 2104917398}
+  - {fileID: 1862428051}

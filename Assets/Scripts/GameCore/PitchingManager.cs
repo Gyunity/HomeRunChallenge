@@ -26,10 +26,10 @@ public class PitchingManager : MonoBehaviour
 
 
     // 타격 타이밍
-    public float perfectHitTime {  get; private set; }
+    public float perfectHitTime { get; private set; }
 
     //마지막으로 생성된 공
-    public GameObject CurrentBall {  get; private set; }
+    public GameObject CurrentBall { get; private set; }
 
 
     public void PitchBall()
@@ -51,7 +51,7 @@ public class PitchingManager : MonoBehaviour
 
         // Rigidbody.Velocity로 공 던지기
         Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();
-        if(rb != null)
+        if (rb != null)
         {
             //targetPoint 방향으로 일정 속도로 이동
             Vector3 dir = (targetPoint.position - spawnPoint.position).normalized;
