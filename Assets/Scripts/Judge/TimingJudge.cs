@@ -17,7 +17,7 @@ public class TimingJudge
 {
     private readonly float perfectTime;
     //오차 허용 최대치
-    private readonly float maxWindow = 0.3f;
+    private readonly float maxWindow = 0.1f;
 
     //공이 도달해야 할 시점
     public TimingJudge(float expectedTime) => perfectTime = expectedTime;

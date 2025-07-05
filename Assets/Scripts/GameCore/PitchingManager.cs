@@ -43,6 +43,10 @@ public class PitchingManager : MonoBehaviour
         if (CurrentBall != null)
             Destroy(CurrentBall);
 
+        //Å¸°ÙÆ÷ÀÎÆ® ·£´ý ¼¼ÆÃ
+        TargetPointRandomSet();
+
+
         // °ø »ý¼º
         CurrentBall = Instantiate(ballPrefab, spawnPoint.position, Quaternion.identity);
 
@@ -64,5 +68,14 @@ public class PitchingManager : MonoBehaviour
         {
             Debug.LogWarning("PitchingManager: Ball prefab is missing a Rigidbody.");
         }
+    }
+
+    private void TargetPointRandomSet()
+    {
+        //·£´ý°ª ¼¼ÆÃ
+        float ranX = Random.Range(-1.5f, 1.5f);
+        float ranY = Random.Range(0.8f, 4.2f);
+        //targetpoint ·£´ý ¼³Á¤
+        targetPoint.position = new Vector3(ranX, ranY, targetPoint.position.z);
     }
 }

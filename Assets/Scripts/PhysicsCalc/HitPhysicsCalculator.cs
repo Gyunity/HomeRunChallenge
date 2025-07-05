@@ -9,11 +9,11 @@ public class HitPhysicsCalculator
     // km/h 기준 속도
     private readonly float basePower = 120f;
     //최소 각도
-    private readonly float minVertAngle = 15f;
+    private readonly float minVertAngle = 5f;
     //최대 각도
     private readonly float maxVertAngle = 35f;
     // 좌우 최대 편차
-    private readonly float maxHorzAngle = 20f;
+    private readonly float maxHorzAngle = 60f;
 
     /// <param name="tRes">TimingResult (Offset, Accuracy)</param>
     /// <param name="positionAccuracy">0~1</param>
