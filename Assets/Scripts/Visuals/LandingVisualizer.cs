@@ -33,9 +33,4 @@ public class LandingVisualizer : MonoBehaviour
             marker.SetActive(true);
         }
     }
-    public void HideLandingSpot()
-    {
-        if(marker != null)
-            marker.SetActive(false);
-    }
 }

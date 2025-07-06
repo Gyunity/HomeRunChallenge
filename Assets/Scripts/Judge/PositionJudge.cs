@@ -6,7 +6,7 @@ public class PositionJudge
 
     private readonly Vector3 expectedPoint;
     //허용 최대 거리 (m)
-    private readonly float maxDistance = 0.5f;
+    private readonly float maxDistance = 1.5f;
 
     public PositionJudge(Vector3 expected) => expectedPoint = expected;
 
