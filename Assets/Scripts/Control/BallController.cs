@@ -19,7 +19,7 @@ public class BallController : MonoBehaviour
     /// <param name="vert">수직 각도(도)</param>
     /// <param name="horz">수평 각도(도)</param>
     /// <param name="forward">타격 방향 벡터</param>
-    
+
     public void ApplyHit(GameObject ball, float speed, float vert, float horz, Vector3 forward, Vector3 batHitPoint)
     {
         var rb = ball.GetComponent<Rigidbody>();
@@ -32,6 +32,11 @@ public class BallController : MonoBehaviour
         Quaternion rotVert = Quaternion.Euler(vert, 0, 0);
         Quaternion rotHorz = Quaternion.Euler(0, horz, 0);
         Vector3 dir = rotHorz * rotVert * baseDir;
+
+        //스피드 최소값 세팅
+        if (speed < 50)
+            speed = 50;
+
 
         // ForceMode.VelocityChange 써서 속도를 직접 세팅
         rb.linearVelocity = dir * speed;

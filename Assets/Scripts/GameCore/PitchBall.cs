@@ -10,36 +10,28 @@ public class PitchBall : MonoBehaviour
         SLIDER
     }
 
-    public BallType balltype;
     private AnimationCurve pitchCurveX;
     private AnimationCurve pitchCurveY;
     public float pitchDuration = 1.0f;
     private float timeElapsed;
 
-    public Transform startPoint;
-    public Transform endPoint;
     void Start()
     {
-        transform.position = startPoint.position;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            transform.position = startPoint.position;
-            timeElapsed = 0;
-
             //베팅 시작
             BattingManager.Instance.canJudge = true;
             BattingManager.Instance.perfectTime = Time.time + pitchDuration;
 
         }
-        Pitch();
     }
 
 
-    private void Pitch()
+    public void Pitch(Transform startPoint, Transform endPoint, BallType balltype)
     {
         if (timeElapsed < pitchDuration)
         {

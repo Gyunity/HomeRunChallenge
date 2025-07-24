@@ -96,16 +96,10 @@ public class HitInputHandler : MonoBehaviour
                 ball.GetComponent<Rigidbody>().useGravity = true;
                 BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, PitchingManager.Instance.spawnPoint.position - PitchingManager.Instance.targetPoint.position, PitchingManager.Instance.targetPoint.position);
 
-
             }
-
             _hitProcessed = true;
         }
 
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    PitchingManager.Instance.PitchBall();
-        //}
     }
 }
 
