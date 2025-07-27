@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PitchingManager : MonoBehaviour
@@ -54,15 +55,24 @@ public class PitchingManager : MonoBehaviour
         perfectHitTime = Time.time + pitchDuration;
 
         // Rigidbody.Velocity로 공 던지기
-        Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();
-        if (rb != null)
+        //Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();
+        IPitchTrajectory traj = CurrentBall.GetComponent<IPitchTrajectory>();
+        if (traj != null)
         {
             //targetPoint 방향으로 일정 속도로 이동
-            Vector3 dir = (targetPoint.position - spawnPoint.position).normalized;
-            float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
+            //Vector3 dir = (targetPoint.position - spawnPoint.position).normalized;
+            //float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
 
-            float speed = distance / pitchDuration;
-            rb.linearVelocity = dir * speed;
+            //float speed = distance / pitchDuration;
+            //rb.linearVelocity = dir * speed;
+            if (traj is CurvePitchTrajectory curveTraj)
+            {
+                Array types = Enum.GetValues(typeof(CurvePitchTrajectory.BallType));
+                int idx = UnityEngine.Random.Range(0, types.Length);
+                curveTraj.ballType = (CurvePitchTrajectory.BallType)types.GetValue(idx);    
+            
+            }
+            traj.Launch(spawnPoint.position, targetPoint.position, pitchDuration);
         }
         else
         {
@@ -73,8 +83,8 @@ public class PitchingManager : MonoBehaviour
     private void TargetPointRandomSet()
     {
         //랜덤값 세팅
-        float ranX = Random.Range(-1.5f, 1.5f);
-        float ranY = Random.Range(0.8f, 4.2f);
+        float ranX = UnityEngine.Random.Range(-1.5f, 1.5f);
+        float ranY = UnityEngine.Random.Range(0.8f, 4.2f);
         //targetpoint 랜덤 설정
         targetPoint.position = new Vector3(ranX, ranY, targetPoint.position.z);
     }
