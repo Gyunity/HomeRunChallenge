@@ -20,6 +20,7 @@ public class CurvePitchTrajectory : MonoBehaviour, IPitchTrajectory
     private float duration;
     private float elapsed;
     private bool launched;
+    private bool stopped;
     private Rigidbody rb;
 
     private void Awake()
@@ -38,7 +39,8 @@ public class CurvePitchTrajectory : MonoBehaviour, IPitchTrajectory
         this.duration = duration;
         elapsed = 0;
         launched = true;
-
+        stopped = false;
+        enabled = true;
         // curve ÃÊ±âÈ­
         curveX = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(1f, 0f));
         curveY = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(1f, 0f));
@@ -62,7 +64,7 @@ public class CurvePitchTrajectory : MonoBehaviour, IPitchTrajectory
 
     private void FixedUpdate()
     {
-        if (!launched) return;
+        if (!launched || stopped) return;
 
         elapsed += Time.fixedDeltaTime;
         if (elapsed > duration)
@@ -83,6 +85,13 @@ public class CurvePitchTrajectory : MonoBehaviour, IPitchTrajectory
         return basePos + new Vector3(curveX.Evaluate(t), curveY.Evaluate(t), 0f);
     }
 
-    public bool IsFinished => !launched;
+    public void Stop()
+    {
+        stopped = true;
+        enabled = false;
+    }
+
+
+    public bool IsFinished => stopped ||  !launched;
 
 }

@@ -68,11 +68,11 @@ public class HitInputHandler : MonoBehaviour
             // 2) Timing & Position 판정
             var tJudge = new TimingJudge(PitchingManager.Instance.perfectHitTime);
             TimingResult tRes = tJudge.Evaluate(clickTime);
-            //Debug.Log("판정 결과" + tRes.Accuracy + "  " + tRes.Offset);
+            Debug.Log("판정 결과" + tRes.Accuracy + "  " + tRes.Offset);
 
 
             float pAcc = new PositionJudge(PitchingManager.Instance.targetPoint.position).Evaluate(clickWorld);
-            // Debug.Log($"클릭 위치 x : {clickWorld.x} y : {clickWorld.y} z : {clickWorld.z} <{pAcc}>");
+             Debug.Log($"클릭 위치 x : {clickWorld.x} y : {clickWorld.y} z : {clickWorld.z} <{pAcc}>");
 
             //타격 범위 0.2초거나 타격 범위가 많이 벗어나면헛스윙
             if (tRes.Accuracy < 0 || pAcc == 0)
@@ -93,9 +93,7 @@ public class HitInputHandler : MonoBehaviour
 
                 // 4) 공 발사
                 GameObject ball = PitchingManager.Instance.CurrentBall;
-                ball.GetComponent<Rigidbody>().useGravity = true;
                 BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, PitchingManager.Instance.spawnPoint.position - PitchingManager.Instance.targetPoint.position, PitchingManager.Instance.targetPoint.position);
-
             }
             _hitProcessed = true;
         }

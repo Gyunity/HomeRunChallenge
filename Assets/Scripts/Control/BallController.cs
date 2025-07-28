@@ -23,6 +23,12 @@ public class BallController : MonoBehaviour
     public void ApplyHit(GameObject ball, float speed, float vert, float horz, Vector3 forward, Vector3 batHitPoint)
     {
         var rb = ball.GetComponent<Rigidbody>();
+        var traj = ball.GetComponent<CurvePitchTrajectory>();
+        if (traj != null)
+        {
+            traj.Stop();
+            rb.useGravity = true;
+        }
 
         //반사 방향 계산
         Vector3 inDir = rb.linearVelocity.normalized;

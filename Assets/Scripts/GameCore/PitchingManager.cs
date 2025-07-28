@@ -57,19 +57,24 @@ public class PitchingManager : MonoBehaviour
         // Rigidbody.Velocity로 공 던지기
         //Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();
         IPitchTrajectory traj = CurrentBall.GetComponent<IPitchTrajectory>();
+        Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();
         if (traj != null)
         {
+            //1).직구만 적용 코드
             //targetPoint 방향으로 일정 속도로 이동
-            //Vector3 dir = (targetPoint.position - spawnPoint.position).normalized;
+            Vector3 dir = (targetPoint.position - spawnPoint.position).normalized;
+            rb.linearVelocity = dir*0.001f;
             //float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
 
             //float speed = distance / pitchDuration;
-            //rb.linearVelocity = dir * speed;
+
+            //2). 변화구 적용 코드
             if (traj is CurvePitchTrajectory curveTraj)
             {
                 Array types = Enum.GetValues(typeof(CurvePitchTrajectory.BallType));
                 int idx = UnityEngine.Random.Range(0, types.Length);
-                curveTraj.ballType = (CurvePitchTrajectory.BallType)types.GetValue(idx);    
+                curveTraj.ballType = (CurvePitchTrajectory.BallType)types.GetValue(idx);
+                Debug.Log(curveTraj.ballType);
             
             }
             traj.Launch(spawnPoint.position, targetPoint.position, pitchDuration);
