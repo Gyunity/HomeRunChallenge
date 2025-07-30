@@ -51,7 +51,7 @@ public class GameFlowManager : MonoBehaviour
         scoreManager.ResetScore();
         currentRound = 0;
         isGameOver = false;
-        while (!isGameOver && currentRound < rounds.Length)
+        while (!isGameOver && currentRound <= rounds.Length)
         {
             var cfg = rounds[currentRound];
             ballsThrown = 0;

@@ -592,7 +592,6 @@ MonoBehaviour:
   ballPrefab: {fileID: 1759826398091092750, guid: be0fadb0de4257b4a941414705c05451, type: 3}
   spawnPoint: {fileID: 1591723698}
   targetPoint: {fileID: 1568151026}
-  pitchDuration: 1
 --- !u!4 &600609894
 Transform:
   m_ObjectHideFlags: 0
@@ -1795,11 +1794,19 @@ MonoBehaviour:
   pitchingManager: {fileID: 600609893}
   hitInputHandler: {fileID: 644670101}
   scoreManager: {fileID: 517666059}
+  ballCountText: {fileID: 1004743075}
+  roundText: {fileID: 1941048015}
+  rounds:
+  - ballTypes: 00000000
+    minSpeedKmh: 100
+    maxSpeedKmh: 120
+  - ballTypes: 0000000002000000
+    minSpeedKmh: 120
+    maxSpeedKmh: 140
   ballsPerRound: 10
   missDelay: 2
   hitDelay: 5
   stageClearScore: 10000
-  ballCount: {fileID: 1004743075}
 --- !u!4 &1559224433
 Transform:
   m_ObjectHideFlags: 0
