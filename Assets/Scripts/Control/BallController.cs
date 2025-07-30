@@ -46,20 +46,6 @@ public class BallController : MonoBehaviour
 
         // ForceMode.VelocityChange 써서 속도를 직접 세팅
         rb.linearVelocity = dir * speed;
-
-        ////랜딩 위치 구하기
-        //Vector3 initialVel = dir * (speed * 0.2777f); // km/h → m/s
-
-        //// 2) 비행 시간, 수평 거리, 착지 위치
-        //float flightTime = TrajectoryPredictor.GetFlightTime(initialVel);
-        //float distance = TrajectoryPredictor.GetHorizontalDistance(initialVel);
-        //Vector3 landing = TrajectoryPredictor.GetLandingPosition(
-        //                        batHitPoint, initialVel);
-
-        //// 3) 디버그/시각화
-        //Debug.Log($"FlightTime={flightTime:F2}s, Distance={distance:F1}m");
-        //LandingVisualizer.Instance.ShowLandingSpot(
-        //    distance, batHitPoint, dir);
     }
 
 

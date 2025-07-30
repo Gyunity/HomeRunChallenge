@@ -12,12 +12,20 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     private int homeRunBonus = 2000;
 
-    public int Score { get; private set; }
+    public int currentScore { get; private set; }
+    public int totalScore { get; private set; }
     
     public void ResetScore()
     {
-        Score = 0;
+        currentScore = 0;
         UpdateUI();
+    }
+
+
+    public void AddScore()
+    {
+        totalScore += currentScore;
+
     }
 
     public void AddScore(AccuracyResult acc, bool isHomeRun)
@@ -25,13 +33,13 @@ public class ScoreManager : MonoBehaviour
         int s = Mathf.RoundToInt(acc.TimingAccuray * acc.PositionAccuracy * baseHitScore);
         if (isHomeRun)
             s += homeRunBonus;
-        Score += s;
+        currentScore += s;
         UpdateUI();
     }
 
     private void UpdateUI()
     {
         if (scoreText != null)
-            scoreText.text = $"Score : {Score}";
+            scoreText.text = $"Score : {currentScore}";
     }
 }

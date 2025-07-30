@@ -22,8 +22,8 @@ public class PitchingManager : MonoBehaviour
     [Tooltip("타격 존으로 사용할 Transform")]
     public Transform targetPoint;
 
-    [Tooltip("투구 후 공이 타격 존까지 도달하는데 걸리는 시간")]
-    public float pitchDuration = 1.0f;
+    //[Tooltip("투구 후 공이 타격 존까지 도달하는데 걸리는 시간")]
+    //public float pitchDuration = 1.0f;
 
 
     // 타격 타이밍
@@ -33,7 +33,7 @@ public class PitchingManager : MonoBehaviour
     public GameObject CurrentBall { get; private set; }
 
 
-    public void PitchBall()
+    public void PitchBall(CurvePitchTrajectory.BallType type, float speedKmh)
     {
         if (ballPrefab == null || spawnPoint == null || targetPoint == null)
         {
@@ -52,36 +52,28 @@ public class PitchingManager : MonoBehaviour
         CurrentBall = Instantiate(ballPrefab, spawnPoint.position, Quaternion.identity);
 
         //타격 점 계산
-        perfectHitTime = Time.time + pitchDuration;
+        float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
+        float duration = distance / (speedKmh * 0.2777f);
+        perfectHitTime = Time.time + duration;
 
         // Rigidbody.Velocity로 공 던지기
         //Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();
-        IPitchTrajectory traj = CurrentBall.GetComponent<IPitchTrajectory>();
+        CurvePitchTrajectory traj = CurrentBall.GetComponent<CurvePitchTrajectory>();
         Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();
         if (traj != null)
         {
-            //1).직구만 적용 코드
-            //targetPoint 방향으로 일정 속도로 이동
+            // 공 방향 설정
             Vector3 dir = (targetPoint.position - spawnPoint.position).normalized;
-            rb.linearVelocity = dir*0.001f;
-            //float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
+            rb.linearVelocity = dir * 0.001f;
 
-            //float speed = distance / pitchDuration;
-
-            //2). 변화구 적용 코드
-            if (traj is CurvePitchTrajectory curveTraj)
-            {
-                Array types = Enum.GetValues(typeof(CurvePitchTrajectory.BallType));
-                int idx = UnityEngine.Random.Range(0, types.Length);
-                curveTraj.ballType = (CurvePitchTrajectory.BallType)types.GetValue(idx);
-                Debug.Log(curveTraj.ballType);
-            
-            }
-            traj.Launch(spawnPoint.position, targetPoint.position, pitchDuration);
+            //구종 설정
+            traj.ballType = type;
+            Debug.Log(type);
+            traj.Launch(spawnPoint.position, targetPoint.position, duration);
         }
         else
         {
-            Debug.LogWarning("PitchingManager: Ball prefab is missing a Rigidbody.");
+            Debug.LogWarning("PitchingManager: Ball prefab is missing a CurvePitchTrajectory.");
         }
     }
 
