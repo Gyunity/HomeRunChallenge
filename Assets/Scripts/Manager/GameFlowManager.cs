@@ -60,9 +60,19 @@ public class GameFlowManager : MonoBehaviour
             while (ballsThrown < ballsPerRound)
             {
                 // 랜덤 구종 및 속도 선택
-                var types = cfg.ballTypes;
-                var type = types[Random.Range(0, types.Length)];
-                float speedKmh = Random.Range(cfg.minSpeedKmh, cfg.maxSpeedKmh);
+                CurvePitchTrajectory.BallType[] types = cfg.ballTypes;
+                CurvePitchTrajectory.BallType type = types[Random.Range(0, types.Length)];
+
+                float speedKmh;
+                if (type == CurvePitchTrajectory.BallType.FOURSEAM || type == CurvePitchTrajectory.BallType.TWOSEAM)
+                {
+                    speedKmh = Random.Range(cfg.minSpeedKmhFast, cfg.maxSpeedKmhFast);
+                }
+                else
+                {
+                    speedKmh = Random.Range(cfg.minSpeedKmhBreaking, cfg.maxSpeedKmhBreaking);
+
+                }
                 // 투구
                 pitchingManager.PitchBall(type, speedKmh);
 
@@ -92,9 +102,9 @@ public class GameFlowManager : MonoBehaviour
 
             //라운드 종료 후
             scoreManager.AddScore();
-            if(scoreManager.currentScore < stageClearScore)
+            if (scoreManager.currentScore < stageClearScore)
             {
-                isGameOver =true;
+                isGameOver = true;
                 GameOver();
                 break;
             }

@@ -316,7 +316,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 920676918501120980, guid: 2bd3dcc8913c465479efcc9f19ead7e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1591723698}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2bd3dcc8913c465479efcc9f19ead7e8, type: 3}
       insertIndex: -1
@@ -496,6 +499,10 @@ PrefabInstance:
       value: MLBplayer_batterPose
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 7d8ab486686a4d84e95fb7989ae7cf9e, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: e2559909917116d41a51a0486f090ccc, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 7d8ab486686a4d84e95fb7989ae7cf9e, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -503,6 +510,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 43846dcc6be677d4c84812ff9278c313, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 7d8ab486686a4d84e95fb7989ae7cf9e, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 7d8ab486686a4d84e95fb7989ae7cf9e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -799,6 +814,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 700433668}
     m_Modifications:
+    - target: {fileID: 202916433590211195, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3848232010638653930, guid: a49945d8dc2b8c24da1e97deb38d647c, type: 3}
       propertyPath: field of view
       value: 34.600002
@@ -1444,7 +1463,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 608c8cc0a1364cc4fbeb3a93480cf773, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -1797,12 +1816,11 @@ MonoBehaviour:
   ballCountText: {fileID: 1004743075}
   roundText: {fileID: 1941048015}
   rounds:
-  - ballTypes: 00000000
-    minSpeedKmh: 100
-    maxSpeedKmh: 120
   - ballTypes: 0000000002000000
-    minSpeedKmh: 120
-    maxSpeedKmh: 140
+    minSpeedKmhFast: 120
+    maxSpeedKmhFast: 140
+    minSpeedKmhBreaking: 110
+    maxSpeedKmhBreaking: 120
   ballsPerRound: 10
   missDelay: 2
   hitDelay: 5
@@ -1987,12 +2005,17 @@ Transform:
   m_GameObject: {fileID: 1591723697}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.24, z: -21.84}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1693210868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1693210868 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 920676918501120980, guid: 2bd3dcc8913c465479efcc9f19ead7e8, type: 3}
+  m_PrefabInstance: {fileID: 393742652}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1724420096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2086,7 +2109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1862428050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2478,7 +2501,6 @@ SceneRoots:
   - {fileID: 1724420096}
   - {fileID: 2009542554}
   - {fileID: 1340414759}
-  - {fileID: 1591723698}
   - {fileID: 1568151026}
   - {fileID: 165800149}
   - {fileID: 703930813}
