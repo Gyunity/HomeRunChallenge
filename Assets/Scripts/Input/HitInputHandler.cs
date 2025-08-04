@@ -21,6 +21,9 @@ public class HitInputHandler : MonoBehaviour
 
     [SerializeField] private LayerMask hitLayerMask;
 
+    [SerializeField]
+    private Animator BattingAni;
+
     //타격 횟수 제한
     public void ResetHitFlag()
     {
@@ -48,6 +51,7 @@ public class HitInputHandler : MonoBehaviour
             swingCheck = true;
 
             // 1) 입력 정보 수집
+            BattingAni.SetTrigger("Batting");
             Vector3 screenPos = (Input.touchCount > 0) ? (Vector3)Input.GetTouch(0).position : Input.mousePosition;
 
             Ray ray = Camera.main.ScreenPointToRay(screenPos);
@@ -66,13 +70,13 @@ public class HitInputHandler : MonoBehaviour
             float clickTime = Time.time;
 
             // 2) Timing & Position 판정
-            var tJudge = new TimingJudge(PitchingManager.Instance.perfectHitTime);
+            TimingJudge tJudge = new TimingJudge(PitchingManager.Instance.perfectHitTime);
             TimingResult tRes = tJudge.Evaluate(clickTime);
-            Debug.Log("판정 결과" + tRes.Accuracy + "  " + tRes.Offset);
+            //Debug.Log("판정 결과" + tRes.Accuracy + "  " + tRes.Offset);
 
 
             float pAcc = new PositionJudge(PitchingManager.Instance.targetPoint.position).Evaluate(clickWorld);
-             Debug.Log($"클릭 위치 x : {clickWorld.x} y : {clickWorld.y} z : {clickWorld.z} <{pAcc}>");
+            //Debug.Log($"클릭 위치 x : {clickWorld.x} y : {clickWorld.y} z : {clickWorld.z} <{pAcc}>");
 
             //타격 범위 0.2초거나 타격 범위가 많이 벗어나면헛스윙
             if (tRes.Accuracy < 0 || pAcc == 0)
@@ -83,7 +87,6 @@ public class HitInputHandler : MonoBehaviour
             }
             else
             {
-                //ToDo. 홈런 시스템 만들기
                 bool isHomeRun = false;
                 OnHit?.Invoke(new AccuracyResult(tRes.Accuracy, pAcc), isHomeRun);
                 lastHitSuccessful = true;

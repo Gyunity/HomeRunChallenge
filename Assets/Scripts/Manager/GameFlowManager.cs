@@ -7,7 +7,9 @@ public class GameFlowManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField]
-    private PitchingManager pitchingManager;
+    private Animator pitchingAnimator;
+    [SerializeField]
+    private PitchingAni pitcherAni;
     [SerializeField]
     private HitInputHandler hitInputHandler;
     [SerializeField]
@@ -74,7 +76,8 @@ public class GameFlowManager : MonoBehaviour
 
                 }
                 // ≈ı±∏
-                pitchingManager.PitchBall(type, speedKmh);
+                pitcherAni.PichingSet(type, speedKmh);
+                pitchingAnimator.SetTrigger("Piching");
 
                 ballsThrown++;
                 UpdateUI();
