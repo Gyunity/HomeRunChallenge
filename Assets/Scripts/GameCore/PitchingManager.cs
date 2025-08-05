@@ -80,8 +80,8 @@ public class PitchingManager : MonoBehaviour
     private void TargetPointRandomSet()
     {
         //·£´ý°ª ¼¼ÆÃ
-        float ranX = UnityEngine.Random.Range(-1.5f, 1.5f);
-        float ranY = UnityEngine.Random.Range(0.8f, 4.2f);
+        float ranX = UnityEngine.Random.Range(-1.25f, 1.25f);
+        float ranY = UnityEngine.Random.Range(1.4f, 4.3f);
         //targetpoint ·£´ý ¼³Á¤
         targetPoint.position = new Vector3(ranX, ranY, targetPoint.position.z);
     }

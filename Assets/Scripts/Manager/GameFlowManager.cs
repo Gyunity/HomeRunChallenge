@@ -1,7 +1,7 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class GameFlowManager : MonoBehaviour
 {
@@ -18,7 +18,8 @@ public class GameFlowManager : MonoBehaviour
     public TMP_Text ballCountText;
     [SerializeField]
     public TMP_Text roundText;
-
+    [SerializeField]
+    private RoundTransitionUI transitionUI;
 
     [Header("Settings")]
     [SerializeField]
@@ -53,9 +54,24 @@ public class GameFlowManager : MonoBehaviour
         scoreManager.ResetScore();
         currentRound = 0;
         isGameOver = false;
+        Debug.Log("11111111");
         while (!isGameOver && currentRound <= rounds.Length)
         {
+            Debug.Log("@2222222");
+
             var cfg = rounds[currentRound];
+            string typesStr = string.Join(", ", cfg.ballTypes.Select(t => t.ToString()));
+            yield return StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast));
+
+            Debug.Log("33333");
+
+            if (!transitionUI.ContinueChosen)
+            {
+                Debug.Log("Player stopped at round " + (currentRound + 1));
+                isGameOver = true;
+                break;
+            }
+
             ballsThrown = 0;
             roundText.text = $"ROUND {currentRound + 1}";
 
