@@ -97,10 +97,8 @@ public class GameFlowManager : MonoBehaviour
 
                 ballsThrown++;
                 UpdateUI();
-                hitInputHandler.ResetHitFlag();
 
-                //yield return new WaitForSeconds(pitchingManager.pitchDuration + 0.2f);
-                hitInputHandler.NoSwingCheck();
+               
                 //타격 또는 헛스윙 이벤트가 올때까지 대기
                 yield return new WaitUntil(() => hitInputHandler.hitProcessed);
 

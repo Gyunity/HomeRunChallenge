@@ -24,7 +24,8 @@ public class PitchingManager : MonoBehaviour
 
     //[Tooltip("투구 후 공이 타격 존까지 도달하는데 걸리는 시간")]
     //public float pitchDuration = 1.0f;
-
+    [SerializeField]
+    private HitInputHandler hitInputHandler;
 
     // 타격 타이밍
     public float perfectHitTime { get; private set; }
@@ -47,6 +48,7 @@ public class PitchingManager : MonoBehaviour
         //타겟포인트 랜덤 세팅
         TargetPointRandomSet();
 
+        hitInputHandler.ResetHitFlag();
 
         // 공 생성
         CurrentBall = Instantiate(ballPrefab, spawnPoint.position, Quaternion.identity);
