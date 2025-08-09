@@ -12,7 +12,7 @@ public class HitInputHandler : MonoBehaviour
 
     [Tooltip("타이밍 판정 최대 오차 윈도우 (초)")]
     [SerializeField]
-    private float maxWindow = 1f;
+    private float maxWindow = 3f;
     private bool _hitProcessed;
     public bool hitProcessed => _hitProcessed;
     public bool lastHitSuccessful { get; private set; }
@@ -46,8 +46,8 @@ public class HitInputHandler : MonoBehaviour
         {
             Debug.Log("자동 헛스윙");
             lastHitSuccessful = false;
-            OnMiss?.Invoke();
             _hitProcessed = true;
+            OnMiss?.Invoke();
             return;
         }
 

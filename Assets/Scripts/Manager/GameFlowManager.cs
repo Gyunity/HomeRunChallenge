@@ -54,16 +54,13 @@ public class GameFlowManager : MonoBehaviour
         scoreManager.ResetScore();
         currentRound = 0;
         isGameOver = false;
-        Debug.Log("11111111");
         while (!isGameOver && currentRound <= rounds.Length)
         {
-            Debug.Log("@2222222");
 
             var cfg = rounds[currentRound];
             string typesStr = string.Join(", ", cfg.ballTypes.Select(t => t.ToString()));
             yield return StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast));
 
-            Debug.Log("33333");
 
             if (!transitionUI.ContinueChosen)
             {
@@ -92,6 +89,8 @@ public class GameFlowManager : MonoBehaviour
 
                 }
                 // ≈ı±∏
+
+                Debug.Log("1111");
                 pitcherAni.PichingSet(type, speedKmh);
                 pitchingAnimator.SetTrigger("Piching");
 

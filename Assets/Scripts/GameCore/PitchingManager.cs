@@ -48,7 +48,6 @@ public class PitchingManager : MonoBehaviour
         //타겟포인트 랜덤 세팅
         TargetPointRandomSet();
 
-        hitInputHandler.ResetHitFlag();
 
         // 공 생성
         CurrentBall = Instantiate(ballPrefab, spawnPoint.position, Quaternion.identity);
@@ -57,6 +56,7 @@ public class PitchingManager : MonoBehaviour
         float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
         float duration = distance / (speedKmh * 0.2777f);
         perfectHitTime = Time.time + duration;
+        hitInputHandler.ResetHitFlag();
 
         // Rigidbody.Velocity로 공 던지기
         //Rigidbody rb = CurrentBall.GetComponent<Rigidbody>();

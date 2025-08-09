@@ -904,7 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419bf89b4d24c7c40ae1e5f58ec8308e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWindow: 0.3
+  maxWindow: 3
   batZoneTransform: {fileID: 1578793567}
   hitLayerMask:
     serializedVersion: 2
