@@ -150,8 +150,11 @@ public class GameFlowManager : MonoBehaviour
 
     private void StageEnd()
     {
+        int total = scoreManager.totalScore;
+        bool newRecord = HighScoreManager.TrySetHighScore(total, "Default");
+
         Debug.Log("10구 완료. 최종 스코어: " + scoreManager.currentScore);
-        // 실패 또는 리트라이 UI 처리
+     
     }
 
     private void GameOver()
