@@ -91,9 +91,6 @@ public class HitInputHandler : MonoBehaviour
         }
         else
         {
-            bool isHomeRun = false;
-            OnHit?.Invoke(new AccuracyResult(tRes.Accuracy, pAcc), isHomeRun);
-            lastHitSuccessful = true;
 
             // 3) 속도, 수직/수평 각도 계산
             var (speed, vertAngle, horzAngle) = new HitPhysicsCalculator().Calculate(tRes, pAcc, tJudge.MaxWindow);
@@ -101,6 +98,10 @@ public class HitInputHandler : MonoBehaviour
             // 4) 공 발사
             GameObject ball = PitchingManager.Instance.CurrentBall;
             BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, PitchingManager.Instance.spawnPoint.position - PitchingManager.Instance.targetPoint.position, PitchingManager.Instance.targetPoint.position);
+
+            OnHit?.Invoke(new AccuracyResult(tRes.Accuracy, pAcc), BallController.Instance.hitDisHomerun
+);
+            lastHitSuccessful = true;
         }
         _hitProcessed = true;
 

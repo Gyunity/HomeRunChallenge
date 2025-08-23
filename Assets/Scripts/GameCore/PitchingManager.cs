@@ -22,6 +22,8 @@ public class PitchingManager : MonoBehaviour
     [Tooltip("타격 존으로 사용할 Transform")]
     public Transform targetPoint;
 
+    public float pitchSpeedMultiplier = 1.2f;  // 전체 체감속도 가속 배율
+
     //[Tooltip("투구 후 공이 타격 존까지 도달하는데 걸리는 시간")]
     //public float pitchDuration = 1.0f;
     [SerializeField]
@@ -54,7 +56,7 @@ public class PitchingManager : MonoBehaviour
 
         //타격 점 계산
         float distance = Vector3.Distance(spawnPoint.position, targetPoint.position);
-        float duration = distance / (speedKmh * 0.2777f);
+        float duration = distance / (speedKmh * 0.2777f * pitchSpeedMultiplier);
         perfectHitTime = Time.time + duration;
         hitInputHandler.ResetHitFlag();
 
@@ -87,4 +89,6 @@ public class PitchingManager : MonoBehaviour
         //targetpoint 랜덤 설정
         targetPoint.position = new Vector3(ranX, ranY, targetPoint.position.z);
     }
+
+
 }

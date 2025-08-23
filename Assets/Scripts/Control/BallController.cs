@@ -14,6 +14,10 @@ public class BallController : MonoBehaviour
         else
             Instance = this;
     }
+
+
+    public bool hitDisHomerun;
+
     /// <param name="ball">공 GameObject</param>
     /// <param name="speed">초기 속도(km/h)</param>
     /// <param name="vert">수직 각도(도)</param>
@@ -46,7 +50,66 @@ public class BallController : MonoBehaviour
 
         // ForceMode.VelocityChange 써서 속도를 직접 세팅
         rb.linearVelocity = dir * speed;
+
+        // --- 착지 예측 (batHitPoint.y 와 같은 높이에 도달할 때) ---
+        if (BallRangeUtil.RangeAtHeight(ball.transform.position,
+                                        rb.linearVelocity,
+                                        batHitPoint.y,
+                                        out float tHit,
+                                        out float rangeXZ,
+                                        out Vector3 land))
+        {
+            if (rangeXZ > 250f)
+                hitDisHomerun = true;
+            else
+                hitDisHomerun = false;
+            Debug.Log($"착지까지 시간 {tHit:F2}s, 수평거리 {rangeXZ:F2}m, 착지점 {land}");
+        }
     }
 
 
+}
+public static class BallRangeUtil
+{
+    /// <summary>
+    /// 현재 위치 p0에서 초기속도 v0로 쐈을 때,
+    /// y = yTarget에 도달하는 시간/수평거리/착지점(XZ)을 계산한다. (공기저항 무시)
+    /// </summary>
+    public static bool RangeAtHeight(Vector3 p0, Vector3 v0, float yTarget,
+                                     out float tHit, out float rangeXZ, out Vector3 landingPoint)
+    {
+        float gy = Physics.gravity.y;                 // 보통 -9.81
+        float a = 0.5f * gy;
+        float b = v0.y;
+        float c = p0.y - yTarget;
+
+        float D = b * b - 4f * a * c;                 // 판별식
+        if (D < 0f || Mathf.Abs(a) < 1e-6f)
+        {
+            tHit = 0f; rangeXZ = 0f; landingPoint = p0;
+            return false; // 해당 높이에 도달하지 않음(혹은 중력 0)
+        }
+
+        // 내려가며 yTarget을 지나는 해 선택
+        float sqrtD = Mathf.Sqrt(D);
+        float t1 = (-b + sqrtD) / (2f * a);
+        float t2 = (-b - sqrtD) / (2f * a);
+        // 양수 중 작은 값이 보통 상승 중 교차, 큰 값이 하강 중 교차.
+        tHit = Mathf.Max(t1, t2);
+        if (tHit <= 0f)
+        {
+            tHit = Mathf.Max(t1, t2);
+            if (tHit <= 0f) { rangeXZ = 0f; landingPoint = p0; return false; }
+        }
+
+        Vector2 vXZ = new Vector2(v0.x, v0.z);
+        rangeXZ = vXZ.magnitude * tHit;
+
+        landingPoint = new Vector3(
+            p0.x + v0.x * tHit,
+            yTarget,                            // 목표 높이
+            p0.z + v0.z * tHit
+        );
+        return true;
+    }
 }

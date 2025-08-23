@@ -90,7 +90,6 @@ public class GameFlowManager : MonoBehaviour
                 }
                 // ≈ı±∏
 
-                Debug.Log("1111");
                 pitcherAni.PichingSet(type, speedKmh);
                 pitchingAnimator.SetTrigger("Piching");
 

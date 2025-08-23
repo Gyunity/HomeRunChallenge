@@ -9,8 +9,6 @@ public class PauseMenu : MonoBehaviour
     //전체 일시정지 창
     [SerializeField]
     private GameObject pausePanel;
-    [SerializeField]
-    private GameObject settingsPanel;
 
     [Header("Buttons")]
     [SerializeField]
@@ -21,11 +19,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private Button btnRetry;
     [SerializeField]
-    private Button butBack;
-    [SerializeField]
-    private Button butSettings;
-    [SerializeField]
-    private Button butSettingClose;
+    private Button btnBack;
+    
+   
 
     [Header("Volume Sliders")]
     [SerializeField]
@@ -45,9 +41,43 @@ public class PauseMenu : MonoBehaviour
     {
         //패널 초기상태
         pausePanel.SetActive(false);
-        settingsPanel.SetActive(false);
 
-        
+        //버튼연결
+        btnPause.onClick.AddListener(TogglePause);
+        btnResume.onClick.AddListener(() => SetPause(false));
+        btnRetry.onClick.AddListener(Retry);
+        btnBack.onClick.AddListener(BackToLobby);
+
+        // 슬라이더 초기화 & 리스너
+        if (masterSlider)
+        {
+            masterSlider.value = PlayerPrefs.GetFloat("vol_master", 1f);
+            masterSlider.onValueChanged.AddListener(v => {
+                SoundManager.Instance.SetMaster(v);
+                PlayerPrefs.SetFloat("vol_master", v);
+            });
+        }
+        if (bgmSlider)
+        {
+            bgmSlider.value = PlayerPrefs.GetFloat("vol_bgm", 0.8f);
+            bgmSlider.onValueChanged.AddListener(v => {
+                SoundManager.Instance.SetBGM(v);
+                PlayerPrefs.SetFloat("vol_bgm", v);
+            });
+        }
+        if (sfxSlider)
+        {
+            sfxSlider.value = PlayerPrefs.GetFloat("vol_sfx", 1f);
+            sfxSlider.onValueChanged.AddListener(v => {
+                SoundManager.Instance.SetSFX(v);
+                PlayerPrefs.SetFloat("vol_sfx", v);
+            });
+        }
+
+        // 저장된 볼륨을 즉시 적용
+        SoundManager.Instance.SetMaster(masterSlider ? masterSlider.value : 1f);
+        SoundManager.Instance.SetBGM(bgmSlider ? bgmSlider.value : 0.8f);
+        SoundManager.Instance.SetSFX(sfxSlider ? sfxSlider.value : 1f);
     }
 
     public void TogglePause() => SetPause(!_paused);
@@ -56,7 +86,6 @@ public class PauseMenu : MonoBehaviour
     {
         _paused = pause;
         pausePanel.SetActive(true);
-        settingsPanel.SetActive(false);
 
         //게임 정지
        Time.timeScale = pause ? 0f : 1f;
