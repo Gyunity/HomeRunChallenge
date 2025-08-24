@@ -22,6 +22,9 @@ MonoBehaviour:
   - key: SFX_Good
     clips:
     - {fileID: 8300000, guid: a2860dc0833ac3c4fbff1df9243294bf, type: 3}
-  - key: BGM_Bad
+  - key: SFX_Bad
     clips:
     - {fileID: 8300000, guid: 97754b6373dd0304a976a28c548e4828, type: 3}
+  - key: BGM_PLAY
+    clips:
+    - {fileID: 8300000, guid: 6cdd8a745ea2f4d4c8527fc8fc429951, type: 3}

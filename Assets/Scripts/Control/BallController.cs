@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 /// <summary>
 /// 생성된 Ball 프리팹의 Rigidbody에 Calculate된 속도 방향 적용
@@ -60,10 +61,20 @@ public class BallController : MonoBehaviour
                                         out Vector3 land))
         {
             if (rangeXZ > 250f)
+            {
                 hitDisHomerun = true;
+                EffectManager.Instance.PlayEffect(EffectType.PerfectHit, ball.transform.position);
+                SoundManager.Instance.PlaySFX("SFX_Perfect", 1f);
+            }
             else
+            {
                 hitDisHomerun = false;
+                SoundManager.Instance.PlaySFX("SFX_Good", 1f);
+
+            }
             Debug.Log($"착지까지 시간 {tHit:F2}s, 수평거리 {rangeXZ:F2}m, 착지점 {land}");
+
+
         }
     }
 

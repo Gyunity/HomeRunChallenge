@@ -85,14 +85,14 @@ public class PauseMenu : MonoBehaviour
     public void SetPause(bool pause)
     {
         _paused = pause;
-        pausePanel.SetActive(true);
+        pausePanel.SetActive(pause);
 
         //게임 정지
        Time.timeScale = pause ? 0f : 1f;
 
         //pc 디버깅용 커서 표시
-        Cursor.visible = pause;
-        Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void Retry()

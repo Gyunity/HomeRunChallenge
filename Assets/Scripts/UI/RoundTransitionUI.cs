@@ -13,6 +13,8 @@ public class RoundTransitionUI : MonoBehaviour
     [SerializeField]
     private TMP_Text roundText;
     [SerializeField]
+    private TMP_Text titleText;
+    [SerializeField]
     private TMP_Text scoreText;
     [SerializeField]
     private TMP_Text typesText;
@@ -45,10 +47,19 @@ public class RoundTransitionUI : MonoBehaviour
         });
     }
 
-    public IEnumerator Show(int roundIndex, int currentScore, string nextTypes, float maxSpeedKmh) 
+    public IEnumerator Show(int roundIndex, int currentScore, string nextTypes, float maxSpeedKmh, bool isGameOver)
     {
         _responded = false;
         ContinueChosen = false;
+        if (roundIndex == 0)
+            titleText.text = "START!";
+        else
+        {
+            if (isGameOver) titleText.text = "GAME OVER";
+            else titleText.text = "CLEAR!!";
+            
+        }
+
 
         roundText.text = $"ROUND {roundIndex + 1}";
         scoreText.text = $"Score: {currentScore:N0}";

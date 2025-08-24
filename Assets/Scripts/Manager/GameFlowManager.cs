@@ -47,6 +47,7 @@ public class GameFlowManager : MonoBehaviour
         hitInputHandler.OnMiss += HandleMiss;
         UpdateUI();
         StartCoroutine(RoundRoutine());
+        SoundManager.Instance.PlayBGM("BGM_PLAY");
     }
 
     private IEnumerator RoundRoutine()
@@ -59,7 +60,7 @@ public class GameFlowManager : MonoBehaviour
 
             var cfg = rounds[currentRound];
             string typesStr = string.Join(", ", cfg.ballTypes.Select(t => t.ToString()));
-            yield return StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast));
+            yield return StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast, isGameOver));
 
 
             if (!transitionUI.ContinueChosen)
@@ -96,17 +97,19 @@ public class GameFlowManager : MonoBehaviour
                 ballsThrown++;
                 UpdateUI();
 
-               
+
                 //타격 또는 헛스윙 이벤트가 올때까지 대기
                 yield return new WaitUntil(() => hitInputHandler.hitProcessed);
 
                 if (ballsThrown >= 10)
                 {
+                    yield return new WaitForSeconds(3f);
                     StageEnd();
                     if (scoreManager.currentScore >= stageClearScore)
-                    {
                         StageClear();
-                    }
+                    else
+                        GameOver();
+
                     yield break;
                 }
 
@@ -123,8 +126,14 @@ public class GameFlowManager : MonoBehaviour
                 GameOver();
                 break;
             }
+            else
+            {
+                currentRound++;
+                yield return StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast, isGameOver));
+                StartCoroutine(RoundRoutine());
+            }
 
-            currentRound++;
+
         }
         // 전체 종료
         Debug.Log($"Game End! Final Score: {scoreManager.totalScore}");
@@ -153,7 +162,7 @@ public class GameFlowManager : MonoBehaviour
         bool newRecord = HighScoreManager.TrySetHighScore(total, "Default");
 
         Debug.Log("10구 완료. 최종 스코어: " + scoreManager.currentScore);
-     
+
     }
 
     private void GameOver()
