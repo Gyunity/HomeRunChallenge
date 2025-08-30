@@ -41,6 +41,8 @@ public class GameFlowManager : MonoBehaviour
     private int ballsThrown;
     private bool isGameOver;
 
+    private bool isThrow = false;
+
     void Start()
     {
         hitInputHandler.OnHit += HandleHit;
@@ -48,6 +50,11 @@ public class GameFlowManager : MonoBehaviour
         UpdateUI();
         StartCoroutine(RoundRoutine());
         SoundManager.Instance.PlayBGM("BGM_PLAY");
+    }
+
+    public void ThorwTrue()
+    {
+        isThrow = true;
     }
 
     private IEnumerator RoundRoutine()
@@ -75,6 +82,7 @@ public class GameFlowManager : MonoBehaviour
 
             while (ballsThrown < ballsPerRound)
             {
+
                 // 랜덤 구종 및 속도 선택
                 CurvePitchTrajectory.BallType[] types = cfg.ballTypes;
                 CurvePitchTrajectory.BallType type = types[Random.Range(0, types.Length)];
@@ -93,7 +101,8 @@ public class GameFlowManager : MonoBehaviour
 
                 pitcherAni.PichingSet(type, speedKmh);
                 pitchingAnimator.SetTrigger("Piching");
-
+                yield return new WaitUntil(()=>isThrow);
+                isThrow = false;
                 ballsThrown++;
                 UpdateUI();
 

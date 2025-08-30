@@ -4,6 +4,8 @@ public class PitchingAni : MonoBehaviour
 {
     [SerializeField]
     private PitchingManager pitchingManager;
+    [SerializeField]
+    private GameFlowManager gameFlowManager;
 
     private CurvePitchTrajectory.BallType currentType = CurvePitchTrajectory.BallType.FOURSEAM;
 
@@ -12,6 +14,7 @@ public class PitchingAni : MonoBehaviour
     private void Pitching()
     {
         pitchingManager.PitchBall(currentType, currentSpeed);
+        gameFlowManager.ThorwTrue();
         Debug.Log($"볼 종류 : {currentType}, 볼 스피드 : {currentSpeed}");
     }
 
