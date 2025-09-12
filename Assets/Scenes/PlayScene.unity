@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 45622696}
-  roundText: {fileID: 35698434}
+  roundText: {fileID: 1988932476}
   titleText: {fileID: 1719541429}
   scoreText: {fileID: 1527688044}
   typesText: {fileID: 1344805195}
@@ -4781,6 +4781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchingManager: {fileID: 600609893}
+  gameFlowManager: {fileID: 1559224432}
 --- !u!1 &1340414755
 GameObject:
   m_ObjectHideFlags: 0

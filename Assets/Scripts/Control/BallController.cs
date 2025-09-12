@@ -64,13 +64,12 @@ public class BallController : MonoBehaviour
             {
                 hitDisHomerun = true;
                 EffectManager.Instance.PlayEffect(EffectType.PerfectHit, ball.transform.position);
-                SoundManager.Instance.PlaySFX("SFX_Perfect", 1f);
+                SoundManager.Instance.PlaySFX("SFX_Perfect", 0f);
             }
             else
             {
                 hitDisHomerun = false;
-                SoundManager.Instance.PlaySFX("SFX_Good", 1f);
-
+                SoundManager.Instance.PlaySFX("SFX_Good", 0f);
             }
             Debug.Log($"착지까지 시간 {tHit:F2}s, 수평거리 {rangeXZ:F2}m, 착지점 {land}");
 

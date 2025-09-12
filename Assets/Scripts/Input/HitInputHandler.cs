@@ -13,7 +13,7 @@ public class HitInputHandler : MonoBehaviour
     [Tooltip("타이밍 판정 최대 오차 윈도우 (초)")]
     [SerializeField]
     private float maxWindow = 1f;
-    private bool _hitProcessed;
+    private bool _hitProcessed = true;
     public bool hitProcessed => _hitProcessed;
     public bool lastHitSuccessful { get; private set; }
 

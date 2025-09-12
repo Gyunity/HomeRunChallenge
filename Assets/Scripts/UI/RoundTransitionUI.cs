@@ -47,7 +47,7 @@ public class RoundTransitionUI : MonoBehaviour
         });
     }
 
-    public IEnumerator Show(int roundIndex, int currentScore, string nextTypes, float maxSpeedKmh, bool isGameOver)
+    public IEnumerator Show(int roundIndex, int totalScore, string nextTypes, float maxSpeedKmh, bool isGameOver)
     {
         _responded = false;
         ContinueChosen = false;
@@ -62,7 +62,7 @@ public class RoundTransitionUI : MonoBehaviour
 
 
         roundText.text = $"ROUND {roundIndex + 1}";
-        scoreText.text = $"Score: {currentScore:N0}";
+        scoreText.text = $"Score: {totalScore:N0}";
         typesText.text = nextTypes;
         speedText.text = $"Max Speed: {maxSpeedKmh:F0} km/h";
 

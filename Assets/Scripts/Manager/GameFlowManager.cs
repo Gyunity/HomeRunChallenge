@@ -3,6 +3,9 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
+// 홈런 챌린지라는 1인 프로젝트의 GmaeFlowManager입니다.
+
+
 public class GameFlowManager : MonoBehaviour
 {
     [Header("References")]
@@ -37,7 +40,7 @@ public class GameFlowManager : MonoBehaviour
     [SerializeField]
     private int stageClearScore = 10000;
 
-    private int currentRound;
+    private int currentRound = 0;
     private int ballsThrown;
     private bool isGameOver;
 
@@ -60,7 +63,7 @@ public class GameFlowManager : MonoBehaviour
     private IEnumerator RoundRoutine()
     {
         scoreManager.ResetScore();
-        currentRound = 0;
+        //currentRound = 0;
         isGameOver = false;
         while (!isGameOver && currentRound <= rounds.Length)
         {
@@ -74,7 +77,7 @@ public class GameFlowManager : MonoBehaviour
             {
                 Debug.Log("Player stopped at round " + (currentRound + 1));
                 isGameOver = true;
-                break;
+                yield break;
             }
 
             ballsThrown = 0;
@@ -101,7 +104,7 @@ public class GameFlowManager : MonoBehaviour
 
                 pitcherAni.PichingSet(type, speedKmh);
                 pitchingAnimator.SetTrigger("Piching");
-                yield return new WaitUntil(()=>isThrow);
+                yield return new WaitUntil(() => isThrow);
                 isThrow = false;
                 ballsThrown++;
                 UpdateUI();
@@ -112,14 +115,23 @@ public class GameFlowManager : MonoBehaviour
 
                 if (ballsThrown >= 10)
                 {
-                    yield return new WaitForSeconds(3f);
+                    scoreManager.AddScore();
                     StageEnd();
                     if (scoreManager.currentScore >= stageClearScore)
+                    {
                         StageClear();
+                        currentRound++;
+                        StartCoroutine(RoundRoutine());
+                        yield break;
+                    }
                     else
+                    {
                         GameOver();
+                        StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast, isGameOver));
+                        yield break;
 
-                    yield break;
+                    }
+
                 }
 
                 //재투구 전 대기
@@ -127,26 +139,9 @@ public class GameFlowManager : MonoBehaviour
                 yield return new WaitForSeconds(delay);
             }
 
-            //라운드 종료 후
-            scoreManager.AddScore();
-            if (scoreManager.currentScore < stageClearScore)
-            {
-                isGameOver = true;
-                GameOver();
-                break;
-            }
-            else
-            {
-                currentRound++;
-                yield return StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast, isGameOver));
-                StartCoroutine(RoundRoutine());
-            }
-
-
         }
         // 전체 종료
-        Debug.Log($"Game End! Final Score: {scoreManager.totalScore}");
-        // TODO: 결과 UI 띄우기
+        GameOver();
     }
 
     private void HandleHit(AccuracyResult acc, bool isHomeRun)
@@ -169,13 +164,16 @@ public class GameFlowManager : MonoBehaviour
     {
         int total = scoreManager.totalScore;
         bool newRecord = HighScoreManager.TrySetHighScore(total, "Default");
-
         Debug.Log("10구 완료. 최종 스코어: " + scoreManager.currentScore);
+        ballsThrown = 0;
 
     }
 
     private void GameOver()
     {
+        Debug.Log($"Game End! Final Score: {scoreManager.totalScore}");
+        isGameOver = true;
+
         Debug.Log("게임 종료!");
     }
 
