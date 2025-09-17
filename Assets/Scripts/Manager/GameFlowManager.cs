@@ -43,6 +43,7 @@ public class GameFlowManager : MonoBehaviour
     private int currentRound = 0;
     private int ballsThrown;
     private bool isGameOver;
+    private bool isGameClear;
 
     private bool isThrow = false;
 
@@ -117,6 +118,13 @@ public class GameFlowManager : MonoBehaviour
                 {
                     scoreManager.AddScore();
                     StageEnd();
+                    if(currentRound == rounds.Length)
+                    {
+                        GameClear();
+                        StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast, isGameOver, isGameClear));
+                        yield break;
+                    }
+
                     if (scoreManager.currentScore >= stageClearScore)
                     {
                         StageClear();
@@ -175,6 +183,13 @@ public class GameFlowManager : MonoBehaviour
         isGameOver = true;
 
         Debug.Log("게임 종료!");
+    }
+    private void GameClear()
+    {
+        Debug.Log($"Game End! Final Score: {scoreManager.totalScore}");
+        isGameOver = false;
+        isGameClear = true;
+        Debug.Log("게임 클리어!");
     }
 
     private void UpdateUI()

@@ -19,7 +19,11 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private Button btnRetry;
     [SerializeField]
+    private Button btnRetry2;
+    [SerializeField]
     private Button btnBack;
+    [SerializeField]
+    private Button btnBack2;
     
    
 
@@ -46,7 +50,9 @@ public class PauseMenu : MonoBehaviour
         btnPause.onClick.AddListener(TogglePause);
         btnResume.onClick.AddListener(() => SetPause(false));
         btnRetry.onClick.AddListener(Retry);
+        btnRetry2.onClick.AddListener(Retry);
         btnBack.onClick.AddListener(BackToLobby);
+        btnBack2.onClick.AddListener(BackToLobby);
 
         // 슬라이더 초기화 & 리스너
         if (masterSlider)

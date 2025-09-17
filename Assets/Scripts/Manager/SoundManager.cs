@@ -21,9 +21,9 @@ public class SoundManager : MonoBehaviour
     private int sfxPoolSize = 16;
 
     //Mixer 파라미터명
-    const string MASTER_PARM = "MasterVol";
-    const string BGM_PARM = "BGMVol";
-    const string SFX_PARM = "SFXVool";
+    const string MASTER_PARM = "Master";
+    const string BGM_PARM = "BGM";
+    const string SFX_PARM = "SFX";
 
     //BGM용 더블버퍼
     private AudioSource _bgmA;
@@ -162,7 +162,7 @@ public class SoundManager : MonoBehaviour
 
     private void SetMixerLinear(string param, float linear)
     {
-        float db = (linear <= 0.0001f) ? -80f : Mathf.Log10(Mathf.Clamp01(linear));
+        float db = (linear <= -40f) ? -80f : linear;
         mixer.SetFloat(param, db);
     }
     

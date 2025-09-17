@@ -24,7 +24,8 @@ public class RoundTransitionUI : MonoBehaviour
     private Button continueButtonl;
     [SerializeField]
     private Button stopButton;
-
+    [SerializeField]
+    private Button conButton;
     private bool _responded;
     public bool ContinueChosen { get; private set; }
 
@@ -47,17 +48,26 @@ public class RoundTransitionUI : MonoBehaviour
         });
     }
 
-    public IEnumerator Show(int roundIndex, int totalScore, string nextTypes, float maxSpeedKmh, bool isGameOver)
+    public IEnumerator Show(int roundIndex, int totalScore, string nextTypes, float maxSpeedKmh, bool isGameOver, bool isGameClear = false)
     {
         _responded = false;
         ContinueChosen = false;
-        if (roundIndex == 0)
+        if (roundIndex == 0 && !isGameOver)
             titleText.text = "START!";
         else
         {
-            if (isGameOver) titleText.text = "GAME OVER";
-            else titleText.text = "CLEAR!!";
-            
+            if (isGameOver)
+            {
+                titleText.text = "GAME OVER";
+                conButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                titleText.text = "CLEAR!!";
+                if (isGameClear)
+                    conButton.gameObject.SetActive(false);
+
+            }
         }
 
 
