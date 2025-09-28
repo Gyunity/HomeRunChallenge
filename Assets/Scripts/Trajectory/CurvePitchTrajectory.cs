@@ -23,6 +23,9 @@ public class CurvePitchTrajectory : MonoBehaviour, IPitchTrajectory
     private bool stopped;
     private Rigidbody rb;
 
+    
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -64,23 +67,21 @@ public class CurvePitchTrajectory : MonoBehaviour, IPitchTrajectory
 
     private void FixedUpdate()
     {
-        if (!launched || stopped) return;
+        if (IsFinished) return;
 
         elapsed += Time.fixedDeltaTime;
+
+        rb.MovePosition(GetPosition(elapsed));
         if (elapsed > duration)
         {
-            launched = false;
+            Stop();
             return;
         }
-
-        float t = Mathf.Clamp01(elapsed / duration);
-        Vector3 basePos = Vector3.Lerp(startPoint.position, endPoint.position, t);
-        Vector3 offset = new Vector3(curveX.Evaluate(t), curveY.Evaluate(t), 0f);
-        rb.MovePosition(basePos + offset);
+        
     }
     public Vector3 GetPosition(float elapsedTime)
     {
-        float t = Mathf.Clamp01(elapsedTime / duration);
+       float t = Mathf.Clamp01(elapsedTime / duration);
         Vector3 basePos = Vector3.Lerp(startPoint.position, endPoint.position, t);
         return basePos + new Vector3(curveX.Evaluate(t), curveY.Evaluate(t), 0f);
     }
@@ -88,6 +89,7 @@ public class CurvePitchTrajectory : MonoBehaviour, IPitchTrajectory
     public void Stop()
     {
         stopped = true;
+        launched = false;
         enabled = false;
     }
 
