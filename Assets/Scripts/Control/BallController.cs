@@ -65,7 +65,7 @@ public class BallController : MonoBehaviour
                 hitDisHomerun = true;
                 EffectManager.Instance.PlayEffect(EffectType.PerfectHit, ball.transform.position);
                 SoundManager.Instance.PlaySFX("SFX_Perfect", 0f);
-                VibrationManager.Vibrate();
+                VibrationManager.Vibrate(300);
             }
             else
             {

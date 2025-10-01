@@ -74,6 +74,9 @@ public class PitchingManager : MonoBehaviour
             traj.ballType = type;
             Debug.Log(type);
             traj.Launch(spawnPoint.position, targetPoint.position, duration);
+
+            //던지는 효과음
+            SoundManager.Instance.PlaySFX("SFX_Throw", 0f);
         }
         else
         {
