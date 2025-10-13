@@ -1,5 +1,6 @@
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.UIElements;
 /// <summary>
 /// 생성된 Ball 프리팹의 Rigidbody에 Calculate된 속도 방향 적용
 /// </summary>
@@ -15,7 +16,8 @@ public class BallController : MonoBehaviour
         else
             Instance = this;
     }
-
+    [SerializeField]
+    private Transform ballDir;
 
     public bool hitDisHomerun;
 
@@ -36,21 +38,19 @@ public class BallController : MonoBehaviour
         }
 
         //반사 방향 계산
-        Vector3 inDir = rb.linearVelocity.normalized;
-        Vector3 baseDir = -inDir;
+        Vector3 baseDir = -ballDir.forward;
 
         //세로 회전 -> 가로 회전 순으로 방향 벡터 생성
-        Quaternion rotVert = Quaternion.Euler(vert, 0, 0);
-        Quaternion rotHorz = Quaternion.Euler(0, horz, 0);
-        Vector3 dir = rotHorz * rotVert * baseDir;
+        Quaternion look = Quaternion.LookRotation(baseDir, -Vector3.up);
+        Quaternion localRot = Quaternion.Euler(vert, horz, 0f);
+        Vector3 dir = look * localRot * Vector3.forward;
 
         //스피드 최소값 세팅
-        if (speed < 50)
-            speed = 50;
+        float outSpeed = Mathf.Max(speed, 50f);
 
 
         // ForceMode.VelocityChange 써서 속도를 직접 세팅
-        rb.linearVelocity = dir * speed;
+        rb.linearVelocity = dir.normalized * outSpeed;
 
         // --- 착지 예측 (batHitPoint.y 와 같은 높이에 도달할 때) ---
         if (BallRangeUtil.RangeAtHeight(ball.transform.position,
