@@ -56,6 +56,10 @@ public class GameFlowManager : MonoBehaviour
         SoundManager.Instance.PlayBGM("BGM_PLAY");
     }
 
+    public int GetCurrentRound()
+    {
+        return currentRound + 1;
+    }
     public void ThorwTrue()
     {
         isThrow = true;
@@ -116,9 +120,8 @@ public class GameFlowManager : MonoBehaviour
 
                 if (ballsThrown >= 10)
                 {
-                    scoreManager.AddScore();
                     StageEnd();
-                    if(currentRound == rounds.Length)
+                    if (currentRound == rounds.Length)
                     {
                         GameClear();
                         StartCoroutine(transitionUI.Show(currentRound, scoreManager.totalScore, typesStr, cfg.maxSpeedKmhFast, isGameOver, isGameClear));

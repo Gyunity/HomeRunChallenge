@@ -19,6 +19,8 @@ public class BallController : MonoBehaviour
     [SerializeField]
     private Transform ballDir;
 
+    [SerializeField]
+    private SlideBanner homeRunBanner;
     public bool hitDisHomerun;
 
     /// <param name="ball">공 GameObject</param>
@@ -27,6 +29,13 @@ public class BallController : MonoBehaviour
     /// <param name="horz">수평 각도(도)</param>
     /// <param name="forward">타격 방향 벡터</param>
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H)){
+            homeRunBanner.PlayOnce();
+
+        }
+    }
     public void ApplyHit(GameObject ball, float speed, float vert, float horz, Vector3 forward, Vector3 batHitPoint)
     {
         var rb = ball.GetComponent<Rigidbody>();
@@ -66,6 +75,7 @@ public class BallController : MonoBehaviour
                 EffectManager.Instance.PlayEffect(EffectType.PerfectHit, ball.transform.position);
                 SoundManager.Instance.PlaySFX("SFX_Perfect", 0f);
                 VibrationManager.Vibrate(300);
+                homeRunBanner.PlayOnce();
             }
             else
             {

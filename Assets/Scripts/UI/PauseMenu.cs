@@ -1,4 +1,5 @@
 using System.Xml.Serialization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,8 +25,14 @@ public class PauseMenu : MonoBehaviour
     private Button btnBack;
     [SerializeField]
     private Button btnBack2;
-    
-   
+
+
+    [Header("Text")]
+    [SerializeField]
+    private TMP_Text roundText;
+    [SerializeField]
+    private TMP_Text scoreText;
+
 
     [Header("Volume Sliders")]
     [SerializeField]
@@ -38,6 +45,12 @@ public class PauseMenu : MonoBehaviour
     [Header("Scenes")]
     [SerializeField]
     private string backSceneName = "LobbyScene";
+
+    [Header("Manager")]
+    [SerializeField]
+    private ScoreManager scoreManager;
+    [SerializeField]
+    private GameFlowManager gameFlowManager;
 
     private bool _paused;
 
@@ -92,6 +105,10 @@ public class PauseMenu : MonoBehaviour
     {
         _paused = pause;
         pausePanel.SetActive(pause);
+
+        Debug.Log($"{pause},{scoreManager.totalScore}, {gameFlowManager.GetCurrentRound()}");
+        scoreText.text = $"SCORE : {scoreManager.totalScore}";
+        roundText.text = $"ROUND : {gameFlowManager.GetCurrentRound()}";
 
         //게임 정지
        Time.timeScale = pause ? 0f : 1f;

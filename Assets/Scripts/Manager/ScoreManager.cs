@@ -22,18 +22,13 @@ public class ScoreManager : MonoBehaviour
     }
 
 
-    public void AddScore()
-    {
-        totalScore += currentScore;
-
-    }
-
     public void AddScore(AccuracyResult acc, bool isHomeRun)
     {
         int s = Mathf.RoundToInt(acc.TimingAccuray * acc.PositionAccuracy * baseHitScore);
         if (isHomeRun)
             s += homeRunBonus;
         currentScore += s;
+        totalScore += currentScore;
         UpdateUI();
     }
 

@@ -31,3 +31,6 @@ MonoBehaviour:
   - key: SFX_Throw
     clips:
     - {fileID: 8300000, guid: 49321362b7194894d82a7f319550e805, type: 3}
+  - key: SFX_HomeRunVoice
+    clips:
+    - {fileID: 8300000, guid: 029180f5a383d6544bb859ef0a3df51f, type: 3}
