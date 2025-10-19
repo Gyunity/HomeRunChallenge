@@ -50,7 +50,7 @@ public class BallController : MonoBehaviour
         Vector3 baseDir = -ballDir.forward;
 
         //세로 회전 -> 가로 회전 순으로 방향 벡터 생성
-        Quaternion look = Quaternion.LookRotation(baseDir, -Vector3.up);
+        Quaternion look = Quaternion.LookRotation(baseDir, -Vector3.forward);
         Quaternion localRot = Quaternion.Euler(vert, horz, 0f);
         Vector3 dir = look * localRot * Vector3.forward;
 
@@ -74,7 +74,7 @@ public class BallController : MonoBehaviour
                 hitDisHomerun = true;
                 EffectManager.Instance.PlayEffect(EffectType.PerfectHit, ball.transform.position);
                 SoundManager.Instance.PlaySFX("SFX_Perfect", 0f);
-                VibrationManager.Vibrate(300);
+                VibrationManager.Vibrate();
                 homeRunBanner.PlayOnce();
             }
             else

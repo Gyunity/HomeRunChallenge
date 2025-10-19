@@ -72,7 +72,7 @@ public class RoundTransitionUI : MonoBehaviour
 
 
         roundText.text = $"ROUND {roundIndex + 1}";
-        scoreText.text = $"Score: {totalScore:N0}";
+        scoreText.text = $"TOTAL SCORE : {totalScore:N0}";
         typesText.text = nextTypes;
         speedText.text = $"Max Speed: {maxSpeedKmh:F0} km/h";
 

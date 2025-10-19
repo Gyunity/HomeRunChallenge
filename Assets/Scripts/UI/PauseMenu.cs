@@ -106,8 +106,8 @@ public class PauseMenu : MonoBehaviour
         _paused = pause;
         pausePanel.SetActive(pause);
 
-        Debug.Log($"{pause},{scoreManager.totalScore}, {gameFlowManager.GetCurrentRound()}");
-        scoreText.text = $"SCORE : {scoreManager.totalScore}";
+        //Debug.Log($"{pause},{scoreManager.totalScore}, {gameFlowManager.GetCurrentRound()}");
+        scoreText.text = $"TOTAL SCORE : {scoreManager.totalScore}";
         roundText.text = $"ROUND : {gameFlowManager.GetCurrentRound()}";
 
         //게임 정지

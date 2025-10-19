@@ -20,6 +20,11 @@ public class ScoreManager : MonoBehaviour
         currentScore = 0;
         UpdateUI();
     }
+    public void ResetToTalScore()
+    {
+        totalScore = 0;
+        UpdateUI();
+    }
 
 
     public void AddScore(AccuracyResult acc, bool isHomeRun)
@@ -28,7 +33,7 @@ public class ScoreManager : MonoBehaviour
         if (isHomeRun)
             s += homeRunBonus;
         currentScore += s;
-        totalScore += currentScore;
+        totalScore += s;
         UpdateUI();
     }
 
