@@ -30,10 +30,10 @@ public class HitPhysicsCalculator
         float speed = kmh * kMH2MPS;
 
         // 수직 각도 : 정확도 보정
-        float vert = Mathf.Lerp(minVertAngle, maxVertAngle, tRes.Accuracy);
+        float vert = Mathf.Lerp(minVertAngle, maxVertAngle, acc);
         // 수평 각도 : offset 부호로 얼리/레이트 구분
         float normOffset = Mathf.Clamp(tRes.Offset / timingWindow, -1f, 1f);
-        float horz = -normOffset * maxHorzAngle;
+        float horz = normOffset * maxHorzAngle;
 
         return (speed, vert, horz);
     }

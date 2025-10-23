@@ -12,8 +12,8 @@ public class PositionJudge
 
     public float Evaluate(Vector3 inputPoint)
     {
-        float delta = Vector3.Distance(inputPoint, expectedPoint);
-        return Mathf.Clamp01(1f - delta / maxDistance);
+        float dist = Vector3.Distance(inputPoint, expectedPoint);
+        return Mathf.Clamp01(1f - dist / maxDistance);
     }
 
 

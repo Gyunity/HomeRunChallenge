@@ -68,7 +68,7 @@ public class HitInputHandler : MonoBehaviour
             return;
         }
 
-        Vector3 clickWorld = hit.point;
+        Vector3 inputPoint = hit.point;
 
         //입력시점
         float clickTime = Time.time;
@@ -79,7 +79,7 @@ public class HitInputHandler : MonoBehaviour
         //Debug.Log("판정 결과" + tRes.Accuracy + "  " + tRes.Offset);
 
 
-        float pAcc = new PositionJudge(PitchingManager.Instance.targetPoint.position).Evaluate(clickWorld);
+        float pAcc = new PositionJudge(PitchingManager.Instance.targetPoint.position).Evaluate(inputPoint);
         //Debug.Log($"클릭 위치 x : {clickWorld.x} y : {clickWorld.y} z : {clickWorld.z} <{pAcc}>");
 
         //타격 범위 0.2초거나 타격 범위가 많이 벗어나면헛스윙
@@ -97,7 +97,7 @@ public class HitInputHandler : MonoBehaviour
            
             // 4) 공 발사
             GameObject ball = PitchingManager.Instance.CurrentBall;
-            BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, PitchingManager.Instance.spawnPoint.position - PitchingManager.Instance.targetPoint.position, PitchingManager.Instance.targetPoint.position);
+            BallController.Instance.ApplyHit(ball, speed, vertAngle, horzAngle, PitchingManager.Instance.targetPoint.position);
 
             OnHit?.Invoke(new AccuracyResult(tRes.Accuracy, pAcc), BallController.Instance.hitDisHomerun
 );

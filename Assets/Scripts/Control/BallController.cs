@@ -36,7 +36,7 @@ public class BallController : MonoBehaviour
 
         }
     }
-    public void ApplyHit(GameObject ball, float speed, float vert, float horz, Vector3 forward, Vector3 batHitPoint)
+    public void ApplyHit(GameObject ball, float speed, float vert, float horz, Vector3 batHitPoint)
     {
         var rb = ball.GetComponent<Rigidbody>();
         var traj = ball.GetComponent<CurvePitchTrajectory>();
@@ -47,19 +47,29 @@ public class BallController : MonoBehaviour
         }
 
         //반사 방향 계산
-        Vector3 baseDir = -ballDir.forward;
+        Vector3 baseDir = ballDir.forward;
 
-        //세로 회전 -> 가로 회전 순으로 방향 벡터 생성
-        Quaternion look = Quaternion.LookRotation(baseDir, -Vector3.forward);
-        Quaternion localRot = Quaternion.Euler(vert, horz, 0f);
-        Vector3 dir = look * localRot * Vector3.forward;
+
+        // 수평 평면으로 납작하게 (y=0인 기준 방향)
+        Vector3 flatFwd = Vector3.ProjectOnPlane(baseDir, Vector3.up);
+        if (flatFwd.sqrMagnitude < 1e-6f) flatFwd = Vector3.forward; // 안전장치
+        flatFwd.Normalize();
+
+        // 좌우 각도
+        Quaternion yaw = Quaternion.AngleAxis(horz, Vector3.up);
+        Vector3 yawedFwd = (yaw * flatFwd).normalized;
+
+        // 위아래
+        Vector3 rightAxis = Vector3.Cross(Vector3.up, yawedFwd).normalized;
+        Quaternion pitch = Quaternion.AngleAxis(-vert, rightAxis);
+        
+        Vector3 dir = (pitch * yawedFwd).normalized;
 
         //스피드 최소값 세팅
         float outSpeed = Mathf.Max(speed, 50f);
 
 
-        // ForceMode.VelocityChange 써서 속도를 직접 세팅
-        rb.linearVelocity = dir.normalized * outSpeed;
+        rb.linearVelocity = dir * outSpeed;
 
         // --- 착지 예측 (batHitPoint.y 와 같은 높이에 도달할 때) ---
         if (BallRangeUtil.RangeAtHeight(ball.transform.position,
@@ -90,47 +100,85 @@ public class BallController : MonoBehaviour
 
 
 }
+
 public static class BallRangeUtil
 {
     /// <summary>
-    /// 현재 위치 p0에서 초기속도 v0로 쐈을 때,
-    /// y = yTarget에 도달하는 시간/수평거리/착지점(XZ)을 계산한다. (공기저항 무시)
+    /// p0에서 v0로 발사 → y=yTarget에 도달하는 "하강" 시점의 시간/수평거리/착지점(XZ) 반환.
+    /// 공기저항 무시, 중력: Physics.gravity.y 사용.
     /// </summary>
-    public static bool RangeAtHeight(Vector3 p0, Vector3 v0, float yTarget,
-                                     out float tHit, out float rangeXZ, out Vector3 landingPoint)
+    public static bool RangeAtHeight(
+        Vector3 p0, Vector3 v0, float yTarget,
+        out float tHit, out float rangeXZ, out Vector3 landingPoint)
     {
-        float gy = Physics.gravity.y;                 // 보통 -9.81
+        float gy = Physics.gravity.y;            // 보통 -9.81
         float a = 0.5f * gy;
         float b = v0.y;
         float c = p0.y - yTarget;
 
-        float D = b * b - 4f * a * c;                 // 판별식
-        if (D < 0f || Mathf.Abs(a) < 1e-6f)
+        // 특이 케이스: 중력 0
+        if (Mathf.Abs(a) < 1e-6f)
         {
             tHit = 0f; rangeXZ = 0f; landingPoint = p0;
-            return false; // 해당 높이에 도달하지 않음(혹은 중력 0)
+            return false;
         }
 
-        // 내려가며 yTarget을 지나는 해 선택
+        // 판별식
+        float D = b * b - 4f * a * c;
+        if (D < 0f)
+        {
+            tHit = 0f; rangeXZ = 0f; landingPoint = p0;
+            return false; // 해당 높이에 닿지 않음
+        }
+
         float sqrtD = Mathf.Sqrt(D);
         float t1 = (-b + sqrtD) / (2f * a);
         float t2 = (-b - sqrtD) / (2f * a);
-        // 양수 중 작은 값이 보통 상승 중 교차, 큰 값이 하강 중 교차.
-        tHit = Mathf.Max(t1, t2);
-        if (tHit <= 0f)
+
+        // 양의 해만 후보로
+        const float EPS = 1e-5f;
+        float[] candidates = new float[2];
+        int n = 0;
+        if (t1 > EPS) candidates[n++] = t1;
+        if (t2 > EPS) candidates[n++] = t2;
+        if (n == 0)
         {
-            tHit = Mathf.Max(t1, t2);
-            if (tHit <= 0f) { rangeXZ = 0f; landingPoint = p0; return false; }
+            tHit = 0f; rangeXZ = 0f; landingPoint = p0;
+            return false;
         }
 
-        Vector2 vXZ = new Vector2(v0.x, v0.z);
-        rangeXZ = vXZ.magnitude * tHit;
+        // 1순위: 하강 중인 해(vy<0) 선택, 없으면 가장 큰 양수(보통 하강) 선택
+        float ChooseTHit(float t)
+        {
+            float vy = b + 2f * a * t; // 그 시점의 수직 속도
+            return vy < 0f ? 2f : 1f;  // 큰 가중치(우선순위)
+        }
+        System.Array.Sort(candidates, (tA, tB) =>
+        {
+            int pA = (ChooseTHit(tA), tA).GetHashCode(); // dummy
+            // 커스텀 정렬 대신 아래 로직으로 간단 정렬
+            float vyA = b + 2f * a * tA;
+            float vyB = b + 2f * a * tB;
+            // 하강(t with vy<0) 우선, 같다면 큰 t(보통 하강)을 선택하게
+            if ((vyA < 0f) != (vyB < 0f)) return (vyB < 0f) ? 1 : -1;
+            return tA.CompareTo(tB);
+        });
 
-        landingPoint = new Vector3(
+        // 위 정렬로 인해 마지막 원소가 가장 바람직한 후보가 되게끔 선택
+        tHit = candidates[n - 1];
+
+        // 착지점(XZ) & 수평거리
+        Vector3 land = new Vector3(
             p0.x + v0.x * tHit,
-            yTarget,                            // 목표 높이
+            yTarget,
             p0.z + v0.z * tHit
         );
+        landingPoint = land;
+
+        Vector2 p0xz = new Vector2(p0.x, p0.z);
+        Vector2 lxz = new Vector2(land.x, land.z);
+        rangeXZ = Vector2.Distance(p0xz, lxz);
+
         return true;
     }
 }

@@ -120,6 +120,7 @@ public class GameFlowManager : MonoBehaviour
 
                 if (ballsThrown >= 10)
                 {
+                    yield return new WaitForSeconds(2.5f);
                     StageEnd();
                     if (currentRound == rounds.Length)
                     {
