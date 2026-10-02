@@ -31,10 +31,7 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H)){
-            homeRunBanner.PlayOnce();
-
-        }
+      
     }
     public void ApplyHit(GameObject ball, float speed, float vert, float horz, Vector3 batHitPoint)
     {
