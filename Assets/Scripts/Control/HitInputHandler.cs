@@ -1,6 +1,7 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem; 
 /// <summary>
 /// 마우스/터치 입력을 받아 전체 타격 파이프라인 실행
 /// </summary>
@@ -51,14 +52,14 @@ public class HitInputHandler : MonoBehaviour
             return;
         }
 
-        bool clicked = Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
+        bool clicked = Pointer.current != null && Pointer.current.press.wasPressedThisFrame;
 
         if (!clicked)
             return;
 
         BattingAni.SetTrigger("Batting");
 
-        Vector3 screenPos = (Input.touchCount > 0) ? (Vector3)Input.GetTouch(0).position : Input.mousePosition;
+        Vector3 screenPos = Pointer.current != null ? (Vector3)Pointer.current.position.ReadValue() : Vector3.zero;
 
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
 
